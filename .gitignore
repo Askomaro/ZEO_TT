@@ -1,0 +1,6 @@
+venv/
+tests/ui/__pycache__/__init__.cpython-34.pyc
+*.pyc
+.cache/
+.idea/
+assets/
