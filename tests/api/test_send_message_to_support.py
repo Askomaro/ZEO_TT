@@ -17,7 +17,7 @@ class TestSendMessageToSupport:
     def setup_method(self):
         self._url = "%s%s%s" % (self._SCHEMA, self._HOST, self._URL_PATH)
 
-    def test_then_receives_status_code_0_if_operation_is_successful(self):
+    def test_receives_status_code_0_if_operation_is_successful(self):
         # Filling with some valid data
         payload = MessageTestDataBuilder() \
             .with_body("") \
@@ -32,9 +32,10 @@ class TestSendMessageToSupport:
         sut = requests.post(self._url, payload)
         sut_response_json = json.loads(sut.text)
 
-        assertTrue(sut_response_json['statusCode'] == 0)
+        assertTrue(sut_response_json['statusCode'] == 0,
+                   'Expects to receive "0" status code.')
 
-    def test_then_receives_status_code_1(self):
+    def test_receives_status_code_1_if_operation_is_failed(self):
         payload = MessageTestDataBuilder() \
             .with_not_valid_signature() \
             .build()
@@ -42,9 +43,10 @@ class TestSendMessageToSupport:
         sut = requests.post(self._url, payload)
         sut_response_json = json.loads(sut.text)
 
-        assertTrue(sut_response_json['statusCode'] == 1)
+        assertTrue(sut_response_json['statusCode'] == 1,
+                   'Expects to receive "1" status code.')
 
-    def test_then_receives_status_code_2(self):
+    def test_receives_status_code_2_if_operation_is_failed(self):
         payload = MessageTestDataBuilder() \
             .with_not_valid_email() \
             .build()
@@ -52,9 +54,10 @@ class TestSendMessageToSupport:
         sut = requests.post(self._url, payload)
         sut_response_json = json.loads(sut.text)
 
-        assertTrue(sut_response_json['statusCode'] == 2)
+        assertTrue(sut_response_json['statusCode'] == 2,
+                   'Expects to receive "2" status code.')
 
-    def test_then_receives_status_code_3(self):
+    def test_receives_status_code_3_if_operation_is_failed(self):
         payload = MessageTestDataBuilder() \
             .with_not_valid_body() \
             .build()
@@ -62,13 +65,15 @@ class TestSendMessageToSupport:
         sut = requests.post(self._url, payload)
         sut_response_json = json.loads(sut.text)
 
-        assertTrue(sut_response_json['statusCode'] == 3)
+        assertTrue(sut_response_json['statusCode'] == 3,
+                   'Expects to receive "3" status code.')
 
-    def test_then_receives_status_code_4(self):
+    def test_receives_status_code_4_if_operation_is_failed(self):
         # Implement some logic here in order to being thrown 'sending message exception'
         payload = MessageTestDataBuilder().build()
 
         sut = requests.post(self._url, payload)
         sut_response_json = json.loads(sut.text)
 
-        assertTrue(sut_response_json['statusCode'] == 4)
+        assertTrue(sut_response_json['statusCode'] == 4,
+                   'Expects to receive "4" status code.')
