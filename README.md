@@ -1,4 +1,4 @@
 # Technical task
-# HOW TO:
-# * pip install -r /path/to/requirements.txt
+# how to run:
+# * pip install -r requirements.txt
 # * python main.py
