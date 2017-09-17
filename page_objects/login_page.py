@@ -1,13 +1,12 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 from page_objects.home_page import HomePage
-import utils.webdriver_extensions as wd_ext
-
+from page_objects.base_page import BasePage
 
 __author__ = 'anton.skomarovskyi@gmail.com'
 
 
-class LoginPage:
+class LoginPage(BasePage):
     __LOGIN_PAGE_URL = 'https://accountstage.mackeeper.com/'
 
     # XPATH locators
@@ -23,10 +22,13 @@ class LoginPage:
         """
         :type driver: WebDriver
         """
+        super(LoginPage, self).__init__(driver)
+
         self.__driver = driver
 
     def open(self):
         self.__driver.get(self.__LOGIN_PAGE_URL)
+        print('Open Login page.')
 
         return self
 
@@ -34,7 +36,8 @@ class LoginPage:
         """
         :rtype self: LoginPage
         """
-        self.__driver.find_element_by_xpath(self.__USERNAME).send_keys(username)
+        self._find_element(self.__USERNAME).send_keys(username)
+        print('Enter user name.')
 
         return self
 
@@ -42,7 +45,8 @@ class LoginPage:
         """
         :rtype self: LoginPage
         """
-        self.__driver.find_element_by_xpath(self.__PASSWORD).send_keys(password)
+        self._find_element(self.__PASSWORD).send_keys(password)
+        print('Enter user password.')
 
         return self
 
@@ -51,7 +55,8 @@ class LoginPage:
         :rtype self: HomePage
         Return a new page object representing the destination.
         """
-        self.__driver.find_element_by_xpath(self.__LOGIN).click()
+        self._find_element(self.__LOGIN).click()
+        print('Press log in button.')
 
         return HomePage(self.__driver)
 
@@ -63,7 +68,8 @@ class LoginPage:
         expected to fail login, the script will fail when it attempts to instantiate
         the LoginPage PageObject.
         """
-        self.__driver.find_element_by_xpath(self.__LOGIN).click()
+        self._find_element(self.__LOGIN).click()
+        print('Press log in button.')
 
         return LoginPage(self.__driver)
 
@@ -90,18 +96,18 @@ class LoginPage:
     @property
     def is_it_login_page(self):
 
-        return not wd_ext.check_exists_by_xpath(self.__driver, self.__USER_MENU)
+        return not self._check_web_element_existing(self.__USER_MENU)
 
     @property
     def is_email_message_error_appeared(self):
-        web_el = self.__driver.find_element_by_xpath(self.__EMAIL_ERROR_MESSAGE)
+        web_el = self._find_element(self.__EMAIL_ERROR_MESSAGE)
         error_message = web_el.text
 
         return error_message != ""
 
     @property
     def is_password_message_error_appeared(self):
-        web_el = self.__driver.find_element_by_xpath(self.__PASSWORD_ERROR_MESSAGE)
+        web_el = self._find_element(self.__PASSWORD_ERROR_MESSAGE)
         error_message = web_el.text
 
         return error_message != ""

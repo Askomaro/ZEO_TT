@@ -1,10 +1,12 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 
-import utils.webdriver_extensions as wd_ext
+from page_objects.base_page import BasePage
+
 
 __author__ = 'anton.skomarovskyi@gmail.com'
 
-class HomePage:
+
+class HomePage(BasePage):
 
     # XPATH locators
     __USER_MENU = '//div[@class="user-menu"]'
@@ -13,9 +15,11 @@ class HomePage:
         """
         :type driver: WebDriver
         """
+        super(HomePage, self).__init__(driver)
+
         self.__driver = driver
 
     @property
     def is_it_home_page(self):
 
-        return wd_ext.check_exists_by_xpath(self.__driver, self.__USER_MENU)
+        return self._check_web_element_existing(self.__USER_MENU)

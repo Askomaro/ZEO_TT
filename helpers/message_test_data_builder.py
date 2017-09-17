@@ -30,6 +30,9 @@ class MessageTestDataBuilder:
         return self
 
     def with_product(self, product):
+        """
+        :type product: ProductType
+        """
         self.__msg_test_data['product'] = product
 
         return self
@@ -46,19 +49,19 @@ class MessageTestDataBuilder:
 
     def with_not_valid_signature(self):
         # TODO: implement logic
-        print("Have not implemented yet")
+        print("Logic has not implemented yet.")
 
         return self
 
     def with_not_valid_email(self):
         # TODO: implement logic
-        print("Have not implemented yet")
+        print("Logic has not implemented yet.")
 
         return self
 
     def with_not_valid_body(self):
         # TODO: implement logic
-        print("Have not implemented yet")
+        print("Logic has not implemented yet.")
 
         return self
 
