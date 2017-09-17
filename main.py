@@ -1,6 +1,8 @@
+import pytest
+
+
 __author__ = 'anton.skomarovskyi@gmail.com'
 
-import pytest
 
 RUN_PARAMETERS = ['--html=report.html']
 
